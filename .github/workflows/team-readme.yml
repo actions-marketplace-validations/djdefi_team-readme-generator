@@ -1,0 +1,22 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Team README
+
+# Controls when the workflow will run
+on:
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.teams.getByName({
+              ${{ secrets.TEAM_ORG_NAME }},
+              ${{ secrets.TEAM_SLUG }},
+            });
