@@ -24,4 +24,5 @@ jobs:
             });
             // Log the list of members to the console
             console.log(team.data);
+            console.log(context)
 
