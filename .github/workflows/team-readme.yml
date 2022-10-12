@@ -19,8 +19,8 @@ jobs:
           script: |
             // Get the list of members
             const team = github.rest.teams.getByName({
-              org: "${{ secrets.TEAM_ORG_NAME }}",
-              team_slug: "${{ secrets.TEAM_SLUG }}"
+              org: "NevadaCountyFreeCodeCamp",
+              team_slug: "Campers"
             });
             // Log the list of members to the console
             console.log(team.data);
