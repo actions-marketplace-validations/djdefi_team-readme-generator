@@ -17,6 +17,6 @@ jobs:
         with:
           script: |
             github.rest.teams.getByName({
-              org: "${{ secrets.TEAM_ORG_NAME }},
+              org: ${{ secrets.TEAM_ORG_NAME }},
               team_slug: ${{ secrets.TEAM_SLUG }}
             });
