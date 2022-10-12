@@ -24,9 +24,4 @@ jobs:
             });
             // Log the list of members to the console
             console.log(team.data);
-            // Format the list of members as a markdown table containing their name and avatar
-            const members = team.data.members.map(member => {
-              return `| ${member.login} | ![${member.login} avatar](${member.avatar_url}) |`;
-            });
-            // Log the markdown table to the console
-            console.log(members);
+
