@@ -23,6 +23,6 @@ jobs:
               team_slug: "Campers"
             });
             // Log the list of members to the console
-            console.log(team.data);
+            console.log(team);
             console.log(context)
 
