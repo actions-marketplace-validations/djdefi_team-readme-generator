@@ -17,6 +17,6 @@ jobs:
         with:
           script: |
             github.rest.teams.getByName({
-              org: NevadaCountyFreeCodeCamp,
-              team_slug: Campers
+              org: "NevadaCountyFreeCodeCamp",
+              team_slug: "Campers"
             });
