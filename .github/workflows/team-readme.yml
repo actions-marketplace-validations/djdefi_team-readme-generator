@@ -15,6 +15,7 @@ jobs:
     steps:
       - uses: actions/github-script@v6
         with:
+          github-token: ${{ secrets.MY_PAT }}
           script: |
             github.rest.teams.getByName({
               org: "NevadaCountyFreeCodeCamp",
