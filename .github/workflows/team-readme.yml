@@ -17,7 +17,19 @@ jobs:
         with:
           github-token: ${{ secrets.MY_PAT }}
           script: |
-            github.rest.teams.getByName({
-              org: "NevadaCountyFreeCodeCamp",
-              team_slug: "Campers"
+            // Get the list of members
+            const team = github.rest.teams.getByName({
+              org: "${{ secrets.TEAM_ORG_NAME }}",
+              team_slug: "${{ secrets.TEAM_SLUG }}"
             });
+            // Format the list of members as a markdown table containing their name and avatar
+            const members = team.data.members.map(member => {
+              return `| ${member.login} | ![${member.login} avatar](${member.avatar_url}) |`;
+            });
+            // Update the README.md file
+            github.rest.repos.createOrUpdateFileContents({
+              owner: "${{ secrets.TEAM_ORG_NAME }}",
+              repo: "${{ secrets.TEAM_SLUG }}",
+              path: "README.md",
+              message: "Update README.md",
+              content: Buffer.from(`# ${team.data.name}
