@@ -21,14 +21,6 @@ jobs:
           github-token: ${{ secrets.MY_PAT }}
           result-encoding: string
           script: |
-            // Get the list of members
-            const team = await github.rest.teams.getByName({
-              org: "NevadaCountyFreeCodeCamp",
-              team_slug: "Campers"
-            });
-            // Log the list of members to the console
-            console.log(team);
-            console.log(team.data);
             // Get the list of members on the team
             const members = await github.rest.teams.listMembersInOrg({
               org: "NevadaCountyFreeCodeCamp",
@@ -42,12 +34,14 @@ jobs:
               const user = github.rest.users.getByUsername({
                 username: member.login
               });
-              return {
-                login: user.data.login,
-                avatar: user.data.avatar_url,
-                location: user.data.location,
-                bio: user.data.bio
-              };
+              // Log the user data to the console
+              console.log(user);
+              console.log(user.data);
+              return user.data;
             }));
             // Log the member data to the console
             console.log(memberData);
+            // Create a markdown table with the member data
+            const table = memberData.map((member) => {
+              return `| <img src="${member.avatar_url}" width="100" /> | ${member.login} | ${member.location} | ${member.bio} |`;
+            }).join("\n");
