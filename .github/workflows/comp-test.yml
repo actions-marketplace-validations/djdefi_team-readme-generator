@@ -9,6 +9,6 @@ jobs:
       - id: Generate
         uses: djdefi/team-readme-generator@main
         with:
-          org: NevadaCountyFreeCodeCamp
-          team: Campers
+          org: desktop
+          team: github
           my-pat: ${{ secrets.MY_PAT }}
