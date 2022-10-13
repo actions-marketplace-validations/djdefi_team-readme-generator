@@ -13,12 +13,16 @@ inputs:
     description: 'The team to get the members from'
     required: true
     default: 'snake-ops'
+  my-pat:
+    description: 'The personal access token to use to authenticate with GitHub'
+    required: true
 
 runs:
     using: "composite"
     steps:
       - uses: actions/github-script@v6
         with:
+          github-token: ${{ inputs.my-pat }}
           result-encoding: string
           script: |
             // Get the list of members on the team
