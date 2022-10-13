@@ -48,6 +48,15 @@ runs:
             // Log the member data to the console
             console.log("MemberData output:");
             console.log(memberData);
+            // Strip newlines from the member data
+            const memberDataStripped = memberData.map((member) => {
+              return {
+                login: member.login,
+                avatar_url: member.avatar_url,
+                location: member.location,
+                bio: member.bio.replace(/\r?\n|\r/g, " ")
+              }
+            });
             // Create a markdown table with the member data
             const table = memberData.map((member) => {
               return `| <img src="${member.avatar_url}" width="30" /> | @${member.login} | ${member.location} | ${member.bio} |`;
@@ -144,7 +153,7 @@ runs:
                 repo: context.repo.repo,
                 title: "Update team README",
                 // Use the table as the description
-                body: "Auto-generated table of team members:\n\n" + tableWithHeaders,
+                body: "Auto-generated table of ${{ inputs.org }}/${{ inputs.team }} team members:\n\n" + tableWithHeaders,
                 head: `update-team-readme-${context.sha.slice(0, 7)}`,
                 base: "main"
               });
