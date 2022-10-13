@@ -33,11 +33,15 @@ jobs:
             // Log the list of members to the console
             console.log(members);
             console.log(members.data);
-            // For each member, get their login, avatar, location, and bio
+            // For each member, use the user api to get their login, avatar, location, and bio
             // Format the data into a markdown table
             const table = members.data.map(member => {
-              const { login, avatar_url, location, bio } = member;
-              return `| <img src="${avatar_url}" width="50" height="50" /> | ${login} | ${location} | ${bio} |`;
+              const user = await github.rest.users.getByUsername({
+                username: member.login
+              });
+              console.log(user);
+              console.log(user.data);
+              return `| ${user.data.login} | ${user.data.avatar_url} | ${user.data.location} | ${user.data.bio} |`;
             });
             // Log the table to the console
             console.log(table);
