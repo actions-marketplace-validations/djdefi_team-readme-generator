@@ -124,7 +124,7 @@ runs:
               const commit = await github.rest.git.createCommit({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                message: "Update team README",
+                message: "Update `@${{ inputs.org }}/${{ inputs.team }}` team members in README",
                 tree: tree.data.sha,
                 parents: [context.sha]
               });
@@ -147,7 +147,7 @@ runs:
                 repo: context.repo.repo,
                 title: "Update team README",
                 // Use the table as the description
-                body: "Auto-generated table of ${{ inputs.org }}/${{ inputs.team }} team members:\n\n" + tableWithHeaders,
+                body: "Auto-generated table of `@${{ inputs.org }}/${{ inputs.team }}`` team members:\n\n" + tableWithHeaders,
                 head: `update-team-readme-${context.sha.slice(0, 7)}`,
                 base: "main"
               });
