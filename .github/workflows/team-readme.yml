@@ -18,7 +18,7 @@ jobs:
           github-token: ${{ secrets.MY_PAT }}
           script: |
             // Get the list of members
-            const team = github.rest.teams.getByName({
+            const team = await github.rest.teams.getByName({
               org: "NevadaCountyFreeCodeCamp",
               team_slug: "Campers"
             });
