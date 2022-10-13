@@ -145,9 +145,9 @@ runs:
               const pullRequest = await github.rest.pulls.create({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                title: "Update team README",
+                title: "Update `@${{ inputs.org }}/${{ inputs.team }}` team README",
                 // Use the table as the description
-                body: "Auto-generated table of `@${{ inputs.org }}/${{ inputs.team }}`` team members:\n\n" + tableWithHeaders,
+                body: "Auto-generated table of `@${{ inputs.org }}/${{ inputs.team }}` team members:\n\n" + tableWithHeaders,
                 head: `update-team-readme-${context.sha.slice(0, 7)}`,
                 base: "main"
               });
