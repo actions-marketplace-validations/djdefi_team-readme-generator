@@ -11,3 +11,4 @@ jobs:
         with:
           org: NevadaCountyFreeCodeCamp
           team: Campers
+          my-pat: ${{ secrets.MY_PAT }}
