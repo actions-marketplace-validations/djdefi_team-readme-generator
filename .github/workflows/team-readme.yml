@@ -86,7 +86,7 @@ jobs:
             // Log the newReadmeContent
             console.log("New README content:");
             console.log(newReadmeContent);
-            
+
             // Create a new branch new branch with a unique name based on the first 7 characters of the commit SHA for the README update and commit the updated README
             const branch = await github.rest.git.createRef({
               owner: context.repo.owner,
@@ -102,7 +102,7 @@ jobs:
             const blob = await github.rest.git.createBlob({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              content: readmeWithTable,
+              content: newReadmeContent,
               encoding: "utf-8"
             });
             // Log the blob to the console
