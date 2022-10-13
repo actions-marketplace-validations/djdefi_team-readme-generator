@@ -23,8 +23,8 @@ jobs:
           script: |
             // Get the list of members on the team
             const members = await github.rest.teams.listMembersInOrg({
-              org: "NevadaCountyFreeCodeCamp",
-              team_slug: "Campers"
+              org: "es-na-battlesnake",
+              team_slug: "snake-ops"
             });
             // Log the list of members to the console
             console.log("Members output:");
