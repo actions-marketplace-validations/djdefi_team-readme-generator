@@ -124,11 +124,11 @@ jobs:
             console.log("Commit output:");
             console.log(commit);
 
-            // Push the commit to the new branch
+            // Push the commit to the new branch with a unique name based on the first 7 characters of the commit SHA
             const push = await github.rest.git.updateRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              ref: "heads/update-team-readme",
+              ref: `heads/update-team-readme-${commit.data.sha.slice(0, 7)}`,
               sha: commit.data.sha
             });
 
@@ -141,7 +141,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               title: "Update team README",
-              head: "update-team-readme",
+              head: "update-team-readme-" + commit.data.sha.slice(0, 7),
               base: "main"
             });
 
