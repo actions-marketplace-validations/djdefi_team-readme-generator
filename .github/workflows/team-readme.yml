@@ -38,10 +38,11 @@ jobs:
             const table = members.data.map(member => {
               const user = github.rest.users.getByUsername({
                 username: member.login
+                // Log the user data to the console
                 console.log(user);
+                console.log(user.data);
               });
               return `| <img src="${user.data.avatar_url}" width="50" height="50" /> | ${user.data.login} | ${user.data.location} | ${user.data.bio} |`;
             });
             // Log the table to the console
             console.log(table);
-
