@@ -33,3 +33,9 @@ jobs:
             // Log the list of members to the console
             console.log(members);
             console.log(members.data);
+            // For each member, get their login, avatar, location, and bio
+            // Format the data into a markdown table
+            const table = members.data.map(member => {
+              const { login, avatar_url, location, bio } = member;
+              return `| <img src="${avatar_url}" width="50" height="50" /> | ${login} | ${location} | ${bio} |`;
+            });
