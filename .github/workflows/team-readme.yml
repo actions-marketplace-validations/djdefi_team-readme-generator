@@ -46,8 +46,8 @@ jobs:
                 console.log(user);
                 console.log(user.data);
               });
-              return `| <img src="${user.data.avatar_url}" width="50" height="50" /> | ${user.data.login} | ${user.data.location} | ${user.data.bio} |`;
+              // return `| <img src="${user.data.avatar_url}" width="50" height="50" /> | ${user.data.login} | ${user.data.location} | ${user.data.bio} |`;
             });
             // Log the table to the console
-            console.log(table);
+            //console.log(table.data
 
