@@ -8,6 +8,9 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+  push:
+    branches: [ main ]
+
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   update-readme:
@@ -16,6 +19,7 @@ jobs:
       - uses: actions/github-script@v6
         with:
           github-token: ${{ secrets.MY_PAT }}
+          result-encoding: string
           script: |
             // Get the list of members
             const team = await github.rest.teams.getByName({
@@ -46,3 +50,4 @@ jobs:
             });
             // Log the table to the console
             console.log(table);
+
