@@ -48,19 +48,10 @@ runs:
             // Log the member data to the console
             console.log("MemberData output:");
             console.log(memberData);
-            // Strip newlines from the member data
-            const memberDataStripped = memberData.map((member) => {
-              return {
-                login: member.login,
-                avatar_url: member.avatar_url,
-                location: member.location,
-                bio: member.bio.replace(/\r?\n|\r/g, " ")
-              }
-            });
-            // Create a markdown table with the member data
+            // Create a markdown table with the member data, removing any newlines from the bio
             const table = memberData.map((member) => {
-              return `| <img src="${member.avatar_url}" width="30" /> | @${member.login} | ${member.location} | ${member.bio} |`;
-            }).join("\n");
+              return `| <img src="${member.avatar_url}" width="100" /> | ${member.login} | ${member.location} | ${member.bio.replace(/\n/g, ' ')} |`;
+            }).join('\n');
             // Log the table to the console
             console.log("Table output:");
             console.log(table);
