@@ -142,7 +142,7 @@ jobs:
               repo: context.repo.repo,
               title: "Update team README",
               // Use the table as the description
-              description: tableWithHeaders,
+              description: "Auto-generated table of team members:\n\n" + tableWithHeaders,
               head: `update-team-readme-${context.sha.slice(0, 7)}`,
               base: "main"
             });
@@ -153,4 +153,3 @@ jobs:
 
             // Return the pull request number
             return pullRequest.data.number;
-
