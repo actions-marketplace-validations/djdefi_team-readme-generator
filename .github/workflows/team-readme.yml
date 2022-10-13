@@ -27,6 +27,7 @@ jobs:
               team_slug: "Campers"
             });
             // Log the list of members to the console
+            console.log("Members output:");
             console.log(members);
             console.log(members.data);
             // For each member returned, use the user api to get their login, avatar, location, and bio
@@ -35,13 +36,18 @@ jobs:
                 username: member.login
               });
               // Log the user data to the console
+              console.log("User output:");
               console.log(user);
               console.log(user.data);
               return user.data;
             }));
             // Log the member data to the console
+            console.log("MemberData output:");
             console.log(memberData);
             // Create a markdown table with the member data
             const table = memberData.map((member) => {
               return `| <img src="${member.avatar_url}" width="100" /> | ${member.login} | ${member.location} | ${member.bio} |`;
             }).join("\n");
+            // Log the table to the console
+            console.log("Table output:");
+            console.log(table);
