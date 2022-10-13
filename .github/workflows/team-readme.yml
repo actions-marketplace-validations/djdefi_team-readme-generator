@@ -116,8 +116,6 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               message: "Update team README",
-              // Use the table as the description
-              description: tableWithHeaders,
               tree: tree.data.sha,
               parents: [context.sha]
             });
@@ -143,6 +141,8 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               title: "Update team README",
+              // Use the table as the description
+              description: tableWithHeaders,
               head: `update-team-readme-${context.sha.slice(0, 7)}`,
               base: "main"
             });
@@ -153,3 +153,4 @@ jobs:
 
             // Return the pull request number
             return pullRequest.data.number;
+
