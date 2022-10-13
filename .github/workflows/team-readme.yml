@@ -24,5 +24,12 @@ jobs:
             });
             // Log the list of members to the console
             console.log(team);
-            console.log(context)
-
+            console.log(team.data);
+            // Get the list of members on the team
+            const members = await github.rest.teams.listMembersInOrg({
+              org: "NevadaCountyFreeCodeCamp",
+              team_slug: "Campers"
+            });
+            // Log the list of members to the console
+            console.log(members);
+            console.log(members.data);
