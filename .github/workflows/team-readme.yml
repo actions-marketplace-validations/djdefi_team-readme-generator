@@ -32,7 +32,7 @@ jobs:
             console.log(members.data);
             // For each member returned, use the user api to get their login, avatar, location, and bio
             const memberData = await Promise.all(members.data.map(async (member) => {
-              const user = github.rest.users.getByUsername({
+              const user = await github.rest.users.getByUsername({
                 username: member.login
               });
               // Log the user data to the console
