@@ -71,17 +71,6 @@ jobs:
             const readmeContentBeforeTable = readmeContent.substring(0, tableStart);
             const readmeContentAfterTable = readmeContent.substring(tableEnd);
             const newReadmeContent = `${readmeContentBeforeTable}\n${tableWithHeaders}\n${readmeContentAfterTable}`;
-            if (readmeContent !== newReadmeContent) {
-              await github.rest.repos.createOrUpdateFileContents({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                path: "README.md",
-                message: "Update team table",
-                content: Buffer.from(newReadmeContent).toString("base64"),
-                sha: readme.data.sha,
-                branch: context.ref
-              });
-            }
 
             // Log the newReadmeContent
             console.log("New README content:");
@@ -98,75 +87,78 @@ jobs:
             console.log("Branch output:");
             console.log(branch);
 
+            // If the newReadmeContent is different from the current README content, commit the new README content to the new branch
             // Create a blob with the updated README
-            const blob = await github.rest.git.createBlob({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              content: newReadmeContent,
-              encoding: "utf-8"
-            });
-            // Log the blob to the console
-            console.log("Blob output:");
-            console.log(blob);
+            if (newReadmeContent !== readmeContent) {
+              const blob = await github.rest.git.createBlob({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                content: newReadmeContent,
+                encoding: "utf-8"
+              });
+              // Log the blob to the console
+              console.log("Blob output:");
+              console.log(blob);
 
-            // Create a tree with the updated README
-            const tree = await github.rest.git.createTree({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              tree: [
-                {
-                  path: "README.md",
-                  mode: "100644",
-                  type: "blob",
-                  sha: blob.data.sha
-                }
-              ],
-              base_tree: context.sha
-            });
+              // Create a tree with the updated README
+              const tree = await github.rest.git.createTree({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                tree: [
+                  {
+                    path: "README.md",
+                    mode: "100644",
+                    type: "blob",
+                    sha: blob.data.sha
+                  }
+                ],
+                base_tree: context.sha
+              });
 
-            // Log the tree to the console 
-            console.log("Tree output:");
-            console.log(tree);
+              // Log the tree to the console 
+              console.log("Tree output:");
+              console.log(tree);
 
-            // Create a commit with the updated README
-            const commit = await github.rest.git.createCommit({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              message: "Update team README",
-              tree: tree.data.sha,
-              parents: [context.sha]
-            });
+              // Create a commit with the updated README
+              const commit = await github.rest.git.createCommit({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                message: "Update team README",
+                tree: tree.data.sha,
+                parents: [context.sha]
+              });
 
-            // Log the commit to the console
-            console.log("Commit output:");
-            console.log(commit);
+              // Log the commit to the console
+              console.log("Commit output:");
+              console.log(commit);
 
-            // Push the commit to the new branch with a unique name based on the first 7 characters of the commit SHA
-            const push = await github.rest.git.updateRef({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              ref: `heads/update-team-readme-${context.sha.slice(0, 7)}`,
-              sha: commit.data.sha
-            });
+              // Push the commit to the new branch with a unique name based on the first 7 characters of the commit SHA
+              const push = await github.rest.git.updateRef({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: `heads/update-team-readme-${context.sha.slice(0, 7)}`,
+                sha: commit.data.sha
+              });
 
-            // Log the push to the console
-            console.log("Push output:");
-            console.log(push);
+              // Log the push to the console
+              console.log("Push output:");
+              console.log(push);
 
-            // Create a pull request with the new branch
-            const pullRequest = await github.rest.pulls.create({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              title: "Update team README",
-              // Use the table as the description
-              body: "Auto-generated table of team members:\n\n" + tableWithHeaders,
-              head: `update-team-readme-${context.sha.slice(0, 7)}`,
-              base: "main"
-            });
+              // Create a pull request with the new branch
+              const pullRequest = await github.rest.pulls.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: "Update team README",
+                // Use the table as the description
+                body: "Auto-generated table of team members:\n\n" + tableWithHeaders,
+                head: `update-team-readme-${context.sha.slice(0, 7)}`,
+                base: "main"
+              });
 
-            // Log the pull request to the console
-            console.log("Pull request output:");
-            console.log(pullRequest);
+              // Log the pull request to the console
+              console.log("Pull request output:");
+              console.log(pullRequest);
 
-            // Return the pull request number
-            return pullRequest.data.number;
+              // Return the pull request number
+              return pullRequest.data.number;
+            }
