@@ -18,7 +18,7 @@ We are small but mighty!
 
 ## Usage:
 
-1. Setup the README.MD by adding the following two tags wherever you want the table to appear:
+1. Setup the README.md by adding the following two tags wherever you want the table to appear:
 
 ```markdown
 <!--auto-team-table-->
