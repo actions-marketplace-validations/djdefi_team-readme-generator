@@ -1,0 +1,13 @@
+on: [push]
+
+jobs:
+  run_team_readme_job:
+    runs-on: ubuntu-latest
+    name: Run team readme generator
+    steps:
+      - uses: actions/checkout@v3
+      - id: Generate
+        uses: djdefi/team-readme-generator@main
+        with:
+          org: NevadaCountyFreeCodeCamp
+          team: Campers
