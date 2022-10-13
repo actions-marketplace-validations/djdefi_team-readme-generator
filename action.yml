@@ -19,7 +19,6 @@ runs:
     steps:
       - uses: actions/github-script@v6
         with:
-          github-token: ${{ secrets.MY_PAT }}
           result-encoding: string
           script: |
             // Get the list of members on the team
