@@ -74,7 +74,7 @@ jobs:
             const branch = await github.rest.git.createRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              ref: `refs/heads/update-team-readme-${commit.data.sha.slice(0, 7)}`,
+              ref: `refs/heads/update-team-readme-${context.sha.slice(0, 7)}`,
               sha: context.sha
             });
             // Log the branch to the console
@@ -128,7 +128,7 @@ jobs:
             const push = await github.rest.git.updateRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              ref: `heads/update-team-readme-${commit.data.sha.slice(0, 7)}`,
+              ref: `heads/update-team-readme-${context.sha.slice(0, 7)}`,
               sha: commit.data.sha
             });
 
@@ -141,7 +141,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               title: "Update team README",
-              head: `update-team-readme-${commit.data.sha.slice(0, 7)}`,
+              head: `update-team-readme-${context.sha.slice(0, 7)}`,
               base: "main"
             });
 
