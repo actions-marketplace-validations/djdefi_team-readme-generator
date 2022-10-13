@@ -58,18 +58,35 @@ jobs:
             console.log(tableWithHeaders);
 
             // Get the README file of the current repo context and its contents
-            // Add the table to the README following the "<!--auto-team-table-->" comment
+            // Add the table to the README following the "<!--auto-team-table-->" comment if the table content has changed
             const readme = await github.rest.repos.getReadme({
               owner: context.repo.owner,
               repo: context.repo.repo,
               ref: context.ref
             });
-            const readmeContents = Buffer.from(readme.data.content, "base64").toString();
-            const readmeWithTable = readmeContents.replace(/<!--auto-team-table-->/, `<!--auto-team-table-->\n${tableWithHeaders}`);
-            // Log the README with table to the console
-            console.log("README with table output:");
-            console.log(readmeWithTable);
+            const readmeContent = Buffer.from(readme.data.content, "base64").toString();
+            const tableComment = "<!--auto-team-table-->";
+            const tableStart = readmeContent.indexOf(tableComment) + tableComment.length;
+            const tableEnd = readmeContent.indexOf("<!--/auto-team-table-->");
+            const readmeContentBeforeTable = readmeContent.substring(0, tableStart);
+            const readmeContentAfterTable = readmeContent.substring(tableEnd);
+            const newReadmeContent = `${readmeContentBeforeTable}\n${tableWithHeaders}\n${readmeContentAfterTable}`;
+            if (readmeContent !== newReadmeContent) {
+              await github.rest.repos.createOrUpdateFileContents({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                path: "README.md",
+                message: "Update team table",
+                content: Buffer.from(newReadmeContent).toString("base64"),
+                sha: readme.data.sha,
+                branch: context.ref
+              });
+            }
 
+            // Log the newReadmeContent
+            console.log("New README content:");
+            console.log(newReadmeContent);
+            
             // Create a new branch new branch with a unique name based on the first 7 characters of the commit SHA for the README update and commit the updated README
             const branch = await github.rest.git.createRef({
               owner: context.repo.owner,
