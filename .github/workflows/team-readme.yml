@@ -70,11 +70,11 @@ jobs:
             console.log("README with table output:");
             console.log(readmeWithTable);
 
-            // Create a new branch for the README update and commit the updated README
+            // Create a new branch new branch with a unique name based on the first 7 characters of the commit SHA for the README update and commit the updated README
             const branch = await github.rest.git.createRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              ref: "refs/heads/update-team-readme",
+              ref: "refs/heads/update-team-readme-" + context.sha.substring(0, 7),
               sha: context.sha
             });
             // Log the branch to the console
@@ -151,3 +151,8 @@ jobs:
 
             // Return the pull request number
             return pullRequest.data.number;
+
+
+
+
+
