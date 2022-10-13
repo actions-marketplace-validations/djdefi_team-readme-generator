@@ -76,20 +76,21 @@ jobs:
             console.log("New README content:");
             console.log(newReadmeContent);
 
-            // Create a new branch new branch with a unique name based on the first 7 characters of the commit SHA for the README update and commit the updated README
-            const branch = await github.rest.git.createRef({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              ref: `refs/heads/update-team-readme-${context.sha.slice(0, 7)}`,
-              sha: context.sha
-            });
-            // Log the branch to the console
-            console.log("Branch output:");
-            console.log(branch);
-
             // If the newReadmeContent is different from the current README content, commit the new README content to the new branch
             // Create a blob with the updated README
             if (newReadmeContent !== readmeContent) {
+              console.log("Updating README");
+              // Create a new branch new branch with a unique name based on the first 7 characters of the commit SHA for the README update and commit the updated README
+              const branch = await github.rest.git.createRef({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: `refs/heads/update-team-readme-${context.sha.slice(0, 7)}`,
+                sha: context.sha
+              });
+              // Log the branch to the console
+              console.log("Branch output:");
+              console.log(branch);
+
               const blob = await github.rest.git.createBlob({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
