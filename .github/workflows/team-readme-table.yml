@@ -1,3 +1,5 @@
+name: "Team README table generator"
+
 on:
 
   # Allows you to run this workflow manually from the Actions tab
