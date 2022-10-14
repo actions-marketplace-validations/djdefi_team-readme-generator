@@ -1,4 +1,16 @@
-on: [push]
+on:
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+    inputs:
+      org:
+        description: 'The organization to run the workflow against'
+        required: true
+        default: 'my-org'
+      team:
+        description: 'The team to run the workflow against'
+        required: true
+        default: 'my-team'
 
 jobs:
   run_team_readme_job:
@@ -9,6 +21,6 @@ jobs:
       - id: Generate
         uses: djdefi/team-readme-generator@main
         with:
-          org: desktop
-          team: github
+          org: ${{ github.event.inputs.org }}
+          team: ${{ github.event.inputs.team }}
           my-pat: ${{ secrets.MY_PAT }}
