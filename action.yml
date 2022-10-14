@@ -1,5 +1,5 @@
-name: 'Team README updater'
-description: 'This action updates the README.md file with a table of team members'
+name: 'Team member table README updater'
+description: 'This Action opens a PR to update the README.md file with a table of team members'
 branding:
   icon: 'users'  
   color: 'green'
@@ -8,11 +8,11 @@ inputs:
   org:
     description: 'The organization to get the team members from'
     required: true
-    default: 'es-na-battlesnake'
+    default: 'my-org'
   team:
     description: 'The team to get the members from'
     required: true
-    default: 'snake-ops'
+    default: 'my-team'
   my-pat:
     description: 'The personal access token to use to authenticate with GitHub'
     required: true
